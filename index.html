@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head> <!--headはページの設定情報を入れる-->
+  <meta charset="UTF-8"><!--文字コードをutf-8（日本語対応）に設定-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>じゃんけんゲーム</title><!--タブに表示されるタイトル-->
+  <style>
+    body {
+      text-align: center;/*ページ全体のテキストを中央に寄せる*/
+      font-family: Arial, sans-serif;/*時のフォントをArialにする。なければsans-serif*/
+    }
+    button {
+      font-size: 20px;
+      margin: 10px;/*ボタンの外側に10pxの空白*/
+      padding: 10px 20px;/*ボタンの内側に10px 20pxの余白*/
+    }
+  </style>
+</head>
+<body>
+
+  <h1>じゃんけんゲーム</h1><!--見出し-->
+  <p>ボタンを押して勝負しよう</p><!--段落-->
+
+  <!--ユーザーの選択肢-->
+  <button onclick="playJanken('グー')">✊</button>
+  <button onclick="playJanken('チョキ')">✂</button>
+  <button onclick="playJanken('パー')">✋</button>
+  <!--onclick="playJankenはボタンがクリックされたときにplayJanken関数を実行する"-->
+
+  <!--結果表示見出し-->
+  <h2 id="result">結果はここに表示されます </h2>
+  <!--Javascriptでid=resultを変更できるようにするための識別子-->
+
+  <script>
+    //じゃんけんの処理
+    function playJanken(userChoice) {
+      const choices = ['グー','チョキ','パー'];//じゃんけんの選択肢を配列として定義
+      const computerChoice = choices[Math.floor (Math.random() *3)];
+      //Math.random() *3が0以上3未満の小数点をランダムに生成
+      //Math.floorが小数点以下を切り捨て、0,1,2のどれかにする
+      //配列0,1,2の規定に基づきchoices[0]'グー'. choices[1]'チョキ'. choices[2]'パー'
+
+      console.log("ユーザーの手:", userChoice);
+      console.log("コンピューターの手:", computerChoice);
+
+      let result = '';
+
+      if (userChoice === computerChoice) {
+        result = '引き分け';
+      }else if (
+        (userChoice === 'グー' && computerChoice === 'チョキ') ||
+        (userChoice === 'チョキ' && computerChoice === 'パー') ||
+        (userChoice === 'パー' && computerChoice === 'グー') 
+      ) {
+        result = 'あなたの勝ち！';
+      } else {
+        result = 'あなたの負け';
+      }
+
+      //結果を表示
+      document.getElementById('result').innerHTML = //document.～('result')→HTMLの<h2 id ="result">を取得する
+      `あなた: ${userChoice} <br> コンピューター: ${computerChoice} <br> <strong>${result}</strong>`;
+    } //<br>は改行  <strong>は太字
+  </script>
+  
+</body>
+</html>
